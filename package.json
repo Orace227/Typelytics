@@ -2,22 +2,57 @@
   "name": "typelytics",
   "displayName": "Typelytics",
   "description": "Track typing patterns and analytics",
-  "version": "0.0.1",
+  "publisher": "orace227",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Orace227/Typelytics.git"
+  },
   "engines": {
     "vscode": "^1.100.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "typelytics.helloWorld",
-        "title": "Hello World"
+        "command": "typingAnalytics.showDashboard",
+        "title": "Show Typing Analytics Dashboard"
+      },
+      {
+        "command": "typingAnalytics.clearData",
+        "title": "Clear Analytics Data"
       }
     ]
+  },
+  "configuration": {
+    "title": "Typelytics",
+    "properties": {
+      "typingAnalytics.enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable typing analytics tracking"
+      },
+      "typingAnalytics.excludePatterns": {
+        "type": "array",
+        "default": [
+          "**/*.log",
+          "**/node_modules/**"
+        ],
+        "description": "File patterns to exclude from tracking"
+      },
+      "typingAnalytics.showDailyPopup": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show daily analytics popup"
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

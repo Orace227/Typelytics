@@ -1,26 +1,45 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import { TypingTracker } from "./tracker/typingTracker";
+import { DataManager } from "./storage/dataManager";
+import { AnalyticsDashboard } from "./ui/webview";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  const dataManager = new DataManager(context);
+  const typingTracker = new TypingTracker(dataManager);
+  const dashboard = new AnalyticsDashboard(context, dataManager);
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "typelytics" is now active!');
+  // Start tracking when extension activates
+  typingTracker.startTracking();
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('typelytics.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Typelytics!');
-	});
+  // Register commands
+  const showDashboardCommand = vscode.commands.registerCommand(
+    "typingAnalytics.showDashboard",
+    () => dashboard.show()
+  );
 
-	context.subscriptions.push(disposable);
+  // Daily popup timer
+  setupDailyPopup(dashboard);
+
+  context.subscriptions.push(showDashboardCommand, typingTracker);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+function setupDailyPopup(dashboard: AnalyticsDashboard) {
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(18, 0, 0, 0); // 6 PM daily
+
+  const msUntilTomorrow = tomorrow.getTime() - now.getTime();
+
+  setTimeout(() => {
+    if (
+      vscode.workspace.getConfiguration("typingAnalytics").get("showDailyPopup")
+    ) {
+      dashboard.showDailySummary();
+    }
+    // Set up recurring daily popup
+    setInterval(() => {
+      dashboard.showDailySummary();
+    }, 24 * 60 * 60 * 1000);
+  }, msUntilTomorrow);
+}
