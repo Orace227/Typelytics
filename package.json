@@ -9,6 +9,7 @@
     "type": "git",
     "url": "https://github.com/Orace227/Typelytics.git"
   },
+  "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.100.0"
   },
