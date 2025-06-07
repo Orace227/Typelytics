@@ -29,28 +29,28 @@
         "command": "typingAnalytics.clearData",
         "title": "Clear Analytics Data"
       }
-    ]
-  },
-  "configuration": {
-    "title": "Typelytics",
-    "properties": {
-      "typingAnalytics.enabled": {
-        "type": "boolean",
-        "default": true,
-        "description": "Enable typing analytics tracking"
-      },
-      "typingAnalytics.excludePatterns": {
-        "type": "array",
-        "default": [
-          "**/*.log",
-          "**/node_modules/**"
-        ],
-        "description": "File patterns to exclude from tracking"
-      },
-      "typingAnalytics.showDailyPopup": {
-        "type": "boolean",
-        "default": true,
-        "description": "Show daily analytics popup"
+    ],
+    "configuration": {
+      "title": "Typelytics",
+      "properties": {
+        "typingAnalytics.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable typing analytics tracking"
+        },
+        "typingAnalytics.excludePatterns": {
+          "type": "array",
+          "default": [
+            "**/*.log",
+            "**/node_modules/**"
+          ],
+          "description": "File patterns to exclude from tracking"
+        },
+        "typingAnalytics.showDailyPopup": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show daily analytics popup"
+        }
       }
     }
   },

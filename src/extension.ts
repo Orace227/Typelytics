@@ -8,6 +8,8 @@ export function activate(context: vscode.ExtensionContext) {
   const typingTracker = new TypingTracker(dataManager);
   const dashboard = new AnalyticsDashboard(context, dataManager);
 
+  console.log("working");
+
   // Start tracking when extension activates
   typingTracker.startTracking();
 
