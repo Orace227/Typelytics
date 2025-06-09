@@ -29,7 +29,7 @@ function setupDailyPopup(dashboard: AnalyticsDashboard) {
   const now = new Date();
   const tomorrow = new Date(now);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(18, 0, 0, 0); // 6 PM daily
+  tomorrow.setHours(17, 0, 0, 0); // 5 PM daily
 
   const msUntilTomorrow = tomorrow.getTime() - now.getTime();
 
